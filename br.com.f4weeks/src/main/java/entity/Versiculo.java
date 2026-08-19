@@ -3,7 +3,6 @@ package entity;
 import jakarta.persistence.*;
 
 @Entity
-@Lombok
 @Table(name = "versiculos")
 public class Versiculo {
 

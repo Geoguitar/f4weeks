@@ -1,10 +1,10 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.2.4' // Pode usar a versão mais recente do Spring Boot 3+
-    id 'io.spring.dependency-management' version '1.1.4'
+    id 'org.springframework.boot' version '3.3.0' // Atualizado
+    id 'io.spring.dependency-management' version '1.1.5' // Atualizado para suportar o Gradle novo
 }
 
-group = 'com.exemplo.pentateuco'
+group = 'br.com.f4weeks'
 version = '0.0.1-SNAPSHOT'
 
 java {
@@ -36,6 +36,11 @@ dependencies {
     // 6. Testes
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
+
+    // Testcontainers para subir o PostgreSQL nos testes
+    testImplementation 'org.testcontainers:junit-jupiter:1.19.7'
+    testImplementation 'org.testcontainers:postgresql:1.19.7'
+    testImplementation 'org.springframework.boot:spring-boot-testcontainers'
 }
 
 tasks.named('test') {
