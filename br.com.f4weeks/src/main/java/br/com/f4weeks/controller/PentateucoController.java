@@ -1,7 +1,7 @@
-package controller;
+package br.com.f4weeks.controller;
 
-import model.Versiculo;
-import repository.VersiculoRepository;
+import br.com.f4weeks.model.Versiculo;
+import br.com.f4weeks.repository.VersiculoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

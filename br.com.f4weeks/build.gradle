@@ -1,14 +1,14 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.4.0' // Atualizado para suportar o Gradle 9+
-    id 'io.spring.dependency-management' version '1.1.6' // Atualizado
+    id 'org.springframework.boot' version '3.4.0'
+    id 'io.spring.dependency-management' version '1.1.6'
 }
 
 group = 'br.com.f4weeks'
 version = '0.0.1-SNAPSHOT'
 
 java {
-    sourceCompatibility = '17' // usando Java 17 (LTS)
+    sourceCompatibility = '17'
 }
 
 repositories {
@@ -25,7 +25,7 @@ dependencies {
     // 3. Driver do PostgreSQL (Para conectar o Java ao banco)
     runtimeOnly 'org.postgresql:postgresql'
 
-    // 4. Segurança (Para proteger as rotas de marcação de versículos)
+    // 4. Segurança (Para proteger as rotas)
     implementation 'org.springframework.boot:spring-boot-starter-security'
 
     // 5. JWT - JSON Web Token (Para gerar e validar os tokens de Login)
@@ -36,13 +36,19 @@ dependencies {
     // 6. Testes
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
     // Testcontainers para subir o PostgreSQL nos testes
     testImplementation 'org.testcontainers:junit-jupiter:1.19.7'
     testImplementation 'org.testcontainers:postgresql:1.19.7'
     testImplementation 'org.springframework.boot:spring-boot-testcontainers'
+
+    testImplementation 'com.h2database:h2'
 }
 
-tasks.named('test') {
+test {
     useJUnitPlatform()
+    // Força o Testcontainers a encontrar o socket Docker rootless via Propriedade de Sistema e Variável de Ambiente
+//    systemProperty 'docker.host', 'unix:///run/user/1000/docker.sock'
+//    environment 'DOCKER_HOST', 'unix:///run/user/1000/docker.sock'
 }

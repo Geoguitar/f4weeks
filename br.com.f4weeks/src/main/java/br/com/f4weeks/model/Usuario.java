@@ -1,4 +1,4 @@
-package model;
+package br.com.f4weeks.model;
 
 import jakarta.persistence.*;
 import java.util.List;

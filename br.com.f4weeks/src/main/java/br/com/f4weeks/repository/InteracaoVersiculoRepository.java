@@ -1,6 +1,6 @@
-package repository;
+package br.com.f4weeks.repository;
 
-import model.InteracaoVersiculo;
+import br.com.f4weeks.model.InteracaoVersiculo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

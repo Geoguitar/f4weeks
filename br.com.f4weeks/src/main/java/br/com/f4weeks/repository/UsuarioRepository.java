@@ -1,6 +1,6 @@
-package repository;
+package br.com.f4weeks.repository;
 
-import model.Usuario;
+import br.com.f4weeks.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 import org.springframework.stereotype.Repository;
