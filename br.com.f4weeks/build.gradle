@@ -1,31 +1,43 @@
 plugins {
     id 'java'
+    id 'org.springframework.boot' version '3.2.4' // Pode usar a versão mais recente do Spring Boot 3+
+    id 'io.spring.dependency-management' version '1.1.4'
 }
 
-group = 'org.example'
-version = '1.0-SNAPSHOT'
+group = 'com.exemplo.pentateuco'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = '17' // Estamos usando Java 17 (LTS)
+}
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    //dependências web e jpa
+    // 1. Core e Web (Para criar a API RESTful e os Controllers)
+    implementation 'org.springframework.boot:spring-boot-starter-web'
 
-    //Testes
+    // 2. Banco de Dados e ORM (JPA, Hibernate e Models)
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // 3. Driver do PostgreSQL (Para conectar o Java ao banco)
+    runtimeOnly 'org.postgresql:postgresql'
+
+    // 4. Segurança (Para proteger as rotas de marcação de versículos)
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    // 5. JWT - JSON Web Token (Para gerar e validar os tokens de Login)
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+    // 6. Testes
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
-
-    // Testcontainers para subir o PostgreSQL nos testes
-    testImplementation 'org.testcontainers:junit-jupiter:1.19.7'
-    testImplementation 'org.testcontainers:postgresql:1.19.7'
-    testImplementation 'org.springframework.boot:spring-boot-testcontainers'
-
-    testImplementation platform('org.junit:junit-bom:6.0.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
-test {
+tasks.named('test') {
     useJUnitPlatform()
 }
