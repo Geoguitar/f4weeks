@@ -1,14 +1,14 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.3.0' // Atualizado
-    id 'io.spring.dependency-management' version '1.1.5' // Atualizado para suportar o Gradle novo
+    id 'org.springframework.boot' version '3.4.0' // Atualizado para suportar o Gradle 9+
+    id 'io.spring.dependency-management' version '1.1.6' // Atualizado
 }
 
 group = 'br.com.f4weeks'
 version = '0.0.1-SNAPSHOT'
 
 java {
-    sourceCompatibility = '17' // Estamos usando Java 17 (LTS)
+    sourceCompatibility = '17' // usando Java 17 (LTS)
 }
 
 repositories {

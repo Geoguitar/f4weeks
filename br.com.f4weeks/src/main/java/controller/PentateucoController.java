@@ -1,7 +1,11 @@
 package controller;
 
-import entity.Versiculo;
+import model.Versiculo;
 import repository.VersiculoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -15,9 +19,23 @@ public class PentateucoController {
     @GetMapping("/parashot/{nome}/versiculos")
     public ResponseEntity<List<Versiculo>> getParasha(@PathVariable String nome) {
         List<Versiculo> trecho = repository.findByNomeParashaOrderByLivroAscCapituloAscVersiculoAsc(nome);
-        if(trecho.isEmpty()) {
-            return ResponseEntity.notFound().build();
+
+        if (trecho == null || trecho.isEmpty()) {
+            // Forma explícita que o compilador entende sem erros
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.ok(trecho);
+
+        // Forma explícita que o compilador entende sem erros
+        return new ResponseEntity<>(trecho, HttpStatus.OK);
     }
 }
+//
+//    @GetMapping("/parashot/{nome}/versiculos")
+//    public ResponseEntity<List<Versiculo>> getParasha(@PathVariable String nome) {
+//        List<Versiculo> trecho = repository.findByNomeParashaOrderByLivroAscCapituloAscVersiculoAsc(nome);
+//        if(trecho.isEmpty()) {
+//            return ResponseEntity.notFound().build();
+//        }
+//        return ResponseEntity.ok(trecho);
+//    }
+//}

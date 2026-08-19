@@ -1,8 +1,6 @@
 package model;
 
 import jakarta.persistence.*;
-import org.testcontainers.shaded.com.google.common.collect.Table;
-
 import java.util.List;
 
 @Entity
