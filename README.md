@@ -7,8 +7,9 @@ Uma API RESTful desenvolvida em Java para consulta aos livros do Pentateuco (Gê
 * **Java** (17+)
 * **Spring Boot** (Web, Data JPA)
 * **PostgreSQL** (Banco de dados relacional para persistência dos versículos)
+* **H2 Database** (Banco de dados em memória exclusivo para execução rápida e isolada dos testes)
 * **Docker & Docker Compose** (Containerização e orquestração do ambiente)
-* **Maven** (Gerenciamento de dependências)
+* **Gradle** (Gerenciamento de dependências e automação de build, substituindo o Maven)
 
 ## 🏛️ Modelo de Domínio
 
@@ -38,31 +39,38 @@ public class Versiculo {
     
     // Getters, Setters e Construtores omitidos
 }
-```
 
-## 🐳 Infraestrutura com Docker (Protótipo)
 
+🧪 Estratégia de Testes
+Para evitar problemas de permissões com o daemon do Docker em ambientes Linux (erros de socket ao usar o Testcontainers), o projeto foi configurado para rodar os testes unitários e de integração utilizando o H2 Database.
+
+Isso garante que os testes com anotações como @DataJpaTest rodem 100% isolados na memória da JVM de forma instantânea:
+
+
+
+./gradlew clean test
+
+
+🐳 Infraestrutura com Docker (Protótipo)
 O projeto está configurado para rodar facilmente em contêineres, separando a aplicação do banco de dados relacional.
 
-### 1. `Dockerfile`
-Arquivo responsável por empacotar a aplicação Spring Boot:
+1. Dockerfile
+Arquivo responsável por empacotar a aplicação Spring Boot gerada pelo Gradle:
 
-```dockerfile
+Dockerfile
 # Utilizando uma imagem leve do Java
 FROM eclipse-temurin:17-jdk-alpine
 WORKDIR /app
 
-# Copia o .jar gerado pelo Maven para dentro do contêiner
-COPY target/pentateuco-api-0.0.1-SNAPSHOT.jar app.jar
+# Copia o .jar gerado pelo Gradle na pasta build para dentro do contêiner
+COPY build/libs/*-SNAPSHOT.jar app.jar
 
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
-```
-
-### 2. `docker-compose.yml`
+2. docker-compose.yml
 Orquestração da API junto ao banco de dados:
 
-```yaml
+YAML
 version: '3.8'
 
 services:
@@ -93,24 +101,28 @@ services:
 
 volumes:
   postgres_data:
-```
 
-## 🛣️ Endpoints Planejados (Proposta inicial)
 
-* `GET /api/versiculos` - Retorna a lista de versículos (com suporte à paginação).
-* `GET /api/versiculos/parasha/{nomeParasha}` - Busca todos os versículos correspondentes a uma Parashá específica.
-* `GET /api/versiculos/livro/{nomeLivro}` - Retorna os versículos de um determinado livro do Pentateuco.
+🛣️ Endpoints Planejados (Proposta inicial)
+GET /api/versiculos - Retorna a lista de versículos (com suporte à paginação).
 
-## ⚙️ Como Executar o Projeto
+GET /api/versiculos/parasha/{nomeParasha} - Busca todos os versículos correspondentes a uma Parashá específica.
 
-1. Certifique-se de ter o **Docker** e o **Docker Compose** instalados em seu ambiente Linux/Ubuntu ou Windows.
-2. Clone o repositório do projeto.
-3. Gere o pacote da aplicação (via Maven):
-   ```bash
-   mvn clean package -DskipTests
-   ```
-4. Suba os contêineres:
-   ```bash
-   docker-compose up -d --build
-   ```
-5. A API estará disponível para uso em `http://localhost:8083`.
+GET /api/versiculos/livro/{nomeLivro} - Retorna os versículos de um determinado livro do Pentateuco.
+
+
+
+⚙️ Como Executar o Projeto
+Certifique-se de ter o Docker e o Docker Compose instalados em seu ambiente Linux/Ubuntu ou Windows.
+
+Clone o repositório do projeto.
+
+Gere o pacote da aplicação (via Gradle, ignorando os testes nesta etapa):
+
+Bash
+./gradlew clean build -x test
+Suba os contêineres:
+
+Bash
+docker-compose up -d --build
+A API estará disponível para uso em http://localhost:8083.
