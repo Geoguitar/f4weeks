@@ -2,7 +2,7 @@ package br.com.f4weeks.repository;
 
 import java.util.List;
 
-import entity.Versiculo;
+import model.Versiculo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.PostgreSQLContainer;
@@ -39,8 +39,8 @@ public class VersiculoRepositoryTest {
 
         List<Versiculo> resultado = repository.findByNomeParashaOrderByLivroAscCapituloAscVersiculoAsc("Bereshit");
 
-        assertThat(resultado).isNotEmpty();
-        assertThat(resultado.get(0).getTexto()).isEqualTo("No princípio criou O Eterno os céus e a terra.");
+        getClass(resultado).isNotEmpty();
+        getClass(resultado.get(0).getTexto()).isEqualTo("No princípio criou O Eterno os céus e a terra.");
     }
 
 }
