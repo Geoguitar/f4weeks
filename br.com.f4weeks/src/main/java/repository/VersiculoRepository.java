@@ -1,16 +1,17 @@
 package repository;
 
-import com.github.dockerjava.api.model.Repository;
 import entity.Versiculo;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
 public interface VersiculoRepository extends JpaRepository<Versiculo, Long> {
 
-    //Fará busca do capítulo inteiro
-    List<Versiculo> findByLivroAndCapituloOrderByVersiculoAsc(String Livro, Integer capitulo);
+    // Busca todos os versículos de um capítulo específico ordenados pelo número
+    List<Versiculo> findByLivroAndCapituloOrderByVersiculoAsc(String livro, Integer capitulo);
 
-    //Fará busca dos versículos de uma parasha específica
+    // Busca todos os versículos pertencentes a uma Parashá específica
     List<Versiculo> findByNomeParashaOrderByLivroAscCapituloAscVersiculoAsc(String nomeParasha);
 }
