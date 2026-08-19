@@ -2,11 +2,13 @@ package br.com.f4weeks.repository;
 
 import java.util.List;
 
+import entity.Versiculo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import repository.VersiculoRepository;
 
 import static org.testcontainers.shaded.org.hamcrest.MatcherAssert.assertThat;
 
