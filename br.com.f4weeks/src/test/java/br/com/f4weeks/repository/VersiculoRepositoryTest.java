@@ -5,12 +5,17 @@ import java.util.List;
 import model.Versiculo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import repository.VersiculoRepository;
+import static org.assertj.core.api.Assertions.assertThat;
 
-import static org.testcontainers.shaded.org.hamcrest.MatcherAssert.assertThat;
+//import static org.testcontainers.shaded.org.hamcrest.MatcherAssert.assertThat;
 
 @DataJpaTest
 @Testcontainers
@@ -19,9 +24,9 @@ public class VersiculoRepositoryTest {
 
     @Container
     @ServiceConnection
-    static PostgreSQLContainer<?> postgres = new PostgresSQLContainer<>("postgres:15-alpine");
+    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:15-alpine");
 
-    @Autowiredv
+    @Autowired
     private VersiculoRepository repository;
 
     @Test
@@ -39,8 +44,11 @@ public class VersiculoRepositoryTest {
 
         List<Versiculo> resultado = repository.findByNomeParashaOrderByLivroAscCapituloAscVersiculoAsc("Bereshit");
 
-        getClass(resultado).isNotEmpty();
-        getClass(resultado.get(0).getTexto()).isEqualTo("No princípio criou O Eterno os céus e a terra.");
+        assertThat(resultado).isNotEmpty();
+        assertThat(resultado.get(0).getTexto()).isEqualTo("No princípio criou O Eterno os céus e a terra.");
+
+//        getClass(resultado).isNotEmpty();
+//        getClass(resultado.get(0).getTexto()).isEqualTo("No princípio criou O Eterno os céus e a terra.");
     }
 
 }
